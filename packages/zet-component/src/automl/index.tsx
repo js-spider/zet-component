@@ -6,6 +6,7 @@ import Achievement from './achievement';
 import Task from './taskPanel';
 import Chart from './modelChart/modelChart';
 import ModelList from './modelList/modelList';
+import ModelDetail from './modelDetail';
 import MetricsSelect from './metricsSelect';
 
 const AutoML = {
@@ -16,6 +17,7 @@ const AutoML = {
   Chart,
   Layout,
   ModelList,
+  ModelDetail,
   MetricsSelect,
 };
 
