@@ -50,7 +50,7 @@ class Item extends React.Component<ItemProps> {
         <div className={'mess'}>
             <p>{mess}</p>
         </div>
-        <Table rowSelection={rowSelection}
+        <Table className='derivative-content-table' rowSelection={rowSelection}
         columns={columns} dataSource={dataSource} pagination={false} bordered={false}/>
       </React.Fragment>
     );

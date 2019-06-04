@@ -50,6 +50,26 @@ export const data = [
         key: 'text4',
         name: "text4",
         meaning: "Transform a Datetime feature into the year."
+      },
+      {
+        key: 'text5',
+        name: "text1",
+        meaning: "Transform a Datetime feature into the year."
+      },
+      {
+        key: 'text6',
+        name: "text2",
+        meaning: "Transform a Datetime feature into the year."
+      },
+      {
+        key: 'text7',
+        name: "text3",
+        meaning: "Transform a Datetime feature into the year."
+      },
+      {
+        key: 'text8',
+        name: "text4",
+        meaning: "Transform a Datetime feature into the year."
       }
     ]
   },
@@ -114,3 +134,42 @@ export const collapseData = {
     'date_of_birth -> customers.MONTH(date_of_birth),customers.YEAR(date_of_birth),customers.DAY(date_of_birth)'
   ]
 }
+
+export const detailData = [
+  {
+    key: '1',
+    name: '胡彦斌',
+    age: 32,
+    address: '西湖区湖底公园1号',
+  },
+  {
+    key: '2',
+    name: '胡彦祖',
+    age: 42,
+    address: '西湖区湖底公园1号',
+  },
+  {
+    key: '3',
+    name: '胡彦斌',
+    age: 32,
+    address: '西湖区湖底公园1号',
+  },
+  {
+    key: '4',
+    name: '胡彦祖',
+    age: 42,
+    address: '西湖区湖底公园1号',
+  },
+  {
+    key: '5',
+    name: '胡彦斌',
+    age: 32,
+    address: '西湖区湖底公园1号',
+  },
+  {
+    key: '6',
+    name: '胡彦祖',
+    age: 42,
+    address: '西湖区湖底公园1号',
+  },
+]

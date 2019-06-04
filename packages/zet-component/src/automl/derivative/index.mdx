@@ -7,7 +7,7 @@ import { Playground, PropsTable } from 'docz';
 import { State, Toggle } from 'react-powerplug';
 import { AutoML } from '../../index.tsx';
 import { LocaleProviderHoc } from '../../utils/hoc.js';
-import { data, value, collapseData } from './_mock/data'
+import { data, value, collapseData,detailData } from './_mock/data'
 
 
 # Derivative
@@ -46,6 +46,36 @@ Derivative
     }}
   </State>
 </Playground>
+
+
+<Playground>
+  <State initial={{visible: false}}>
+    {({ state, setState }) => {
+      const Detail = AutoML.Derivative.Detail;
+      const { visible } = state;
+      console.log('detail >>> ', Detail, detailData)
+      const handleCancel = ()=>{
+        setState({
+          visible:false
+        })
+      }
+      const showModal = ()=>{
+        setState({
+          visible:true
+        })
+      }
+      return (
+        LocaleProviderHoc(
+          <div>
+            <p><a onClick={showModal}> 查看</a></p>
+            <Detail visible={visible} data={detailData} width={800}	handleCancel={handleCancel}></Detail>
+          </div>
+        )
+      )
+    }}
+  </State>
+</Playground>
+
 
 
 ## API
