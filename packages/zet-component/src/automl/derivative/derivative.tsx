@@ -56,12 +56,21 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
   }
   onSwitchChange = (checked, data) => {
     const { value } = this.props;
-    const newValue = value.map(item => {
-      if (item.id === data.id) {
-        item.checked = checked;
-      }
-      return item;
-    });
+    let newValue = [];
+    if (value.length > 0) {
+      newValue = value.map(item => {
+        if (item.id === data.id) {
+          item.checked = checked;
+        }
+        return item;
+      });
+    } else {
+      newValue = [{
+        id: data.id,
+        checked,
+        params: [],
+      }];
+    }
     this.props.onChange(newValue);
   }
 
@@ -81,7 +90,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     const contentData = data.find((item) => (item.id === currentId)) || {params: []};
     const contentValue = value.find((item) => (item.id === currentId)) || {id: '', params: []};
     return (
-      <Layout>
+      <Layout className={'derivative-wraper'}>
         <Layout className={"alg-layout derivative"}>
           <Sider theme="light" width={240}>
             <p className={"sider-title"}>特征衍生策略</p>
@@ -106,7 +115,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
             </div>
           </Content>
         </Layout>
-        <Footer className={'derivative-footer'} style={{ height: 300 }}>
+        <Footer className={'derivative-footer'}>
           <Collapse data={collapseData}/>
         </Footer>
       </Layout>

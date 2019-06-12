@@ -1,5 +1,7 @@
 import React from "react";
+import { Form } from 'antd';
 import { LocaleProvider } from "../index";
+import { convertMem,defaultResourceType } from './utils.js';
 import LocaleReceiver from "../components/locale-provider/localeReceiver";
 
 /**
@@ -59,4 +61,47 @@ export const LocaleReceiverHoc = componentName => WrappedComponent => {
       );
     }
   };
+};
+
+/**
+ *  resource Form
+ */
+
+export const FormResourcesHoc = WrappedComponent => {
+  class HocComponent extends React.Component{
+    render(){
+      return (
+        <WrappedComponent {...this.props} form={this.props.form} ></WrappedComponent>   
+      )
+    }
+  }
+  return Form.create({
+    mapPropsToFields(props) {
+      const { standalone, groupConfig } = props;
+      const result = {};
+      let itemName,itemContent;
+      groupConfig.forEach(conf=>{
+        itemName = conf.key;
+        itemContent = conf.itemContent || defaultResourceType;
+        itemContent.includes('mem') && (result[`${itemName}_mem`] = Form.createFormField({ value: convertMem(standalone[itemName].mem) }))
+        itemContent.includes('cpu') && (result[`${itemName}_cpu`] = Form.createFormField({ value: standalone[itemName].cpu }))
+        itemContent.includes('gpu') && (result[`${itemName}_gpu`] = Form.createFormField({ value: standalone[itemName].gpu }))
+      })
+      return result;
+    },
+    onValuesChange(props, _ , allValues){
+      const { groupConfig } = props;
+      const result = {};
+      let itemName,itemContent;
+      groupConfig.forEach(conf => {
+        itemName = conf.key;
+        itemContent = conf.itemContent || defaultResourceType;
+        result[itemName] = {};
+        itemContent.includes('mem') && (result[itemName].mem = allValues[`${itemName}_mem`]*1024)
+        itemContent.includes('cpu') && (result[itemName].cpu = allValues[`${itemName}_cpu`])
+        itemContent.includes('gpu') && (result[itemName].gpu = allValues[`${itemName}_gpu`])
+      })
+      props.onChange(result,props)
+    }
+  })(HocComponent)
 };

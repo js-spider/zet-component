@@ -1,0 +1,46 @@
+---
+name: Resources (资源页面)
+menu: AutoML
+order: 70
+---
+
+import { Playground, PropsTable } from 'docz';
+import { State, Toggle } from 'react-powerplug'
+import { AutoML } from '../../index.tsx';
+// import { FormResourcesHoc } from "../../utils/hoc.js";
+import { groupConfig, standalone, userResource } from './_mock/data.js'
+
+# AutoML.Design (建模设计)
+自动建模建模设计时候用此组件
+
+
+引入组件
+
+```
+import { AutoML } from 'zet-component';
+```
+
+## Basic task
+<Playground>
+  <State initial={{ show:'chart' }}>
+    {
+      ({state,setState})=>{
+        const { Resources } = AutoML;
+        // const FR = FormResourcesHoc(Resources)
+        const onChange = (values)=>{
+          console.log('mdx values >> ', values)
+        }
+        return (
+          <Resources
+            groupConfig={groupConfig}
+            authRead={false}
+            standalone={standalone}
+            userResource={userResource}
+            onChange={onChange}
+          ></Resources>
+        )
+      }
+    }
+  </State>
+</Playground>
+

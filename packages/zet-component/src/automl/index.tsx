@@ -8,6 +8,7 @@ import Chart from './modelChart/modelChart';
 import ModelList from './modelList/modelList';
 import MetricsSelect from './metricsSelect';
 import Derivative from './derivative';
+import Resources from './resource';
 
 const AutoML = {
   Design,
@@ -19,6 +20,7 @@ const AutoML = {
   ModelList,
   MetricsSelect,
   Derivative,
+  Resources,
 };
 
 export default AutoML;
