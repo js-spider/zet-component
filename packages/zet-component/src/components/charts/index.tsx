@@ -3,7 +3,7 @@ import SliderChart from './sliderChart';
 import LineChart from './LineChart';
 import PieChart from './PieChart';
 import Rect4 from './rect4';
-import BarChart1 from './BarChart1';
+import BarChart1 from './barChart1';
 import CurveChart from './curve';
 import Rect5 from './rect5';
 import Line from './line';

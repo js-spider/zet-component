@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Components } from '../../index';
 import ZetModal from '../../components/ZetModal';
-// import BarChart1 from '../../components/charts/BarChart1';
+import BarChart1 from '../../components/charts/BarChart1';
 import SliderChart from '../../components/charts/SliderChart';
 import Rect5 from '../../components/charts/rect5';
 import Line from '../../components/charts/line';
@@ -17,8 +17,8 @@ import data from "./mock";
 import CompareCharts from "./compareCharts";
 import CompareTable from "./compareTable";
 // import Chart from "../../../dist/components/charts";
-const { Chart } = Components;
-const { BarChart1 } = Chart;
+// const { Chart } = Components;
+// const { BarChart1 } = Chart;
 const { TabPane } = Tabs;
 
 class Demo extends Component {
