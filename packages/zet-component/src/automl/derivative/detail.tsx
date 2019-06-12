@@ -14,19 +14,19 @@ const getColumns = () => {
       title: "序号",
       dataIndex: "index",
       key: "index",
-      align: "center",
+      // align: "center",
     },
     {
       title: "字段名",
       dataIndex: "field",
       key: "field",
-      align: "center",
+      // align: "center",
     },
     {
       title: "类型",
       dataIndex: "type",
       key: "type",
-      align: "center",
+      // align: "center",
     },
   ];
 };
