@@ -4,8 +4,6 @@ import ArrowPNG from '../../assets/arrow.png';
 import ArrowPNG2 from '../../assets/arrow2.png';
 import './index.less';
 export interface PipelineProps {
-  id: string;
-  title: string;
   data: any[];
 }
 
@@ -89,7 +87,7 @@ function NodeRow(props) {
 
 class PipeLine extends PureComponent<PipelineProps, any> {
   render() {
-    const { id, title, data } = this.props;
+    const { data } = this.props;
     const totalNode = [];
     for (let i = 1; i <= Math.ceil(data.length / 4); i++) {
       if (i % 2 === 0) {
@@ -101,8 +99,7 @@ class PipeLine extends PureComponent<PipelineProps, any> {
       totalNode.push(<NodeRow index={i} reverse={i % 2 === 0} data={data} />);
     }
     return (
-      <div id={id}>
-        <h3 className={'dashedBorder'}>{title}</h3>
+      <div>
         {totalNode}
       </div>
     );

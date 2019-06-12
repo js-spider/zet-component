@@ -7,9 +7,12 @@ import { LocaleReceiverHoc } from "../../utils/hoc";
 import './index.less';
 
 export interface RowColProps {
-  data: any[];
-  id: string;
-  title: string;
+  data: [ DataProps[]];
+}
+
+export interface DataProps {
+  key: any;
+  value: any;
 }
 
 class RowCol extends React.Component<RowColProps, any> {
@@ -19,26 +22,31 @@ class RowCol extends React.Component<RowColProps, any> {
   }
 
   render() {
-    const { id, data, title } =  this.props;
+    const { data } =  this.props;
     return (
-      <div id={id}>
-        <h3 className={'dashedBorder'}>{title}</h3>
+      <div>
           {data.map(d => {
             return (
               <Row key={1} className={'smallinfo'}>{
-                Object.keys(d).map(v => {
+                d.map(v => {
                   return (
                     <div key={2}>
-                      {v === '__title__' ?
-                        <Row className={'smalltitle'}>{d[v]}</Row> :
+                      {v.key === '__title__' ?
+                        <Row className={'smalltitle'}>{v.value}</Row> :
                         <Col span={8} className={'col'}>
-                          {v}:
+                          {v.key}:
                           <span className={'value'}>
                             {
-                              Array.isArray(d[v]) ?
-                                d[v].map(i => {
-                                  return <span key={3} style={{ flex: 1 / d[v].length, marginLeft: 10 }}>{i}</span>;
-                                }) : <span style={{ marginLeft: 10 }}>{d[v]}</span>
+                              Array.isArray(v.value) ?
+                                v.value.map(i => {
+                                  return (
+                                    <span key={3} style={{ flex: 1 / v.value.length, marginLeft: 10 }}>
+                                      {i}
+                                    </span>
+                                  );
+                                })
+                                :
+                                <span style={{ marginLeft: 10 }}>{v.value}</span>
                             }
                           </span>
                         </Col>

@@ -1,14 +1,30 @@
 import React, { Component } from 'react';
+import { Components } from '../../index';
 import ZetModal from '../../components/ZetModal';
-import { Button, Icon, Tooltip } from 'antd';
+// import BarChart1 from '../../components/charts/BarChart1';
+import SliderChart from '../../components/charts/SliderChart';
+import Rect5 from '../../components/charts/rect5';
+import Line from '../../components/charts/line';
+import Line2 from '../../components/charts/line2';
+// import Line3 from '../../components/charts/line3';
+import Roc from './roc';
+import Matrix from './matrix';
+import { Button, Icon, Tooltip, Tabs } from 'antd';
 import ModelDetail from './index';
 import RowCol from "./row-col";
 import PipeLine from "./pipeline";
-
+import data from "./mock";
+import CompareCharts from "./compareCharts";
+import CompareTable from "./compareTable";
+// import Chart from "../../../dist/components/charts";
+const { Chart } = Components;
+const { BarChart1 } = Chart;
+const { TabPane } = Tabs;
 
 class Demo extends Component {
   state = {
-    visible: false
+    visible: false,
+    windowStatus: 'normal',
   }
   showModal = () => {
     this.setState({
@@ -29,10 +45,13 @@ class Demo extends Component {
       visible: false,
     });
   }
-  onChangeSize = () => {
-    console.log('callback');
+  onChangeSize = (value) => {
+    this.setState({
+      windowStatus: value,
+    });
   }
   render() {
+    const { windowStatus } = this.state;
     const arr = [
       <span>
         <Icon type="step-backward" />
@@ -53,6 +72,41 @@ class Demo extends Component {
       {__title__: '概述', acc: 0.9, 名字: 'lili'},
       {__title__: '概述', acc: 0.9, 名字: 'lili'},
     ];
+    const Threshold = '阈值计算';
+    const IsolatedForests = '孤立森林';
+    const IFException = '孤立森林异常点';
+    const THException = '阈值计算异常点';
+   const legendExtend = (modelTypes) => (_, legendTitles = []) => {
+      const titles = [...legendTitles];
+      if (modelTypes.indexOf(Threshold) !== -1 && !titles.find(item => item.alias === THException)) {
+        titles.push({ alias: THException, color: 'red' });
+      }
+      if (modelTypes.indexOf(IsolatedForests) !== -1 && !titles.find(item => item.alias === IFException)) {
+        titles.push({ alias: IFException, color: 'purple' });
+      }
+      return titles;
+    };
+   const isolatedForestsScales = (y = 'y', alias) => {
+      return {
+        scales: {
+          axisX: { key: 'x', mask: 'HH:mm:ss' },
+          axisY: [
+            { key: y,
+              alias,
+              color: ['y*prediction', (val1, val2) => { return thresholdColor(`0_${val2}`); }],
+              shape: 'circle',
+              type: 'point' },
+          ],
+        },
+      };
+    };
+   const thresholdColor = (() => {
+      const obj = { 0: 'green', 1: 'red', '0_0': 'green', '0_1': 'purple', '1_0': 'red', '1_1': 'red' };
+      return (key) => {
+        return obj[key] || 'transparent';
+      };
+    })();
+   const modelPerformance = JSON.parse(data.modelPerformance);
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>
@@ -79,7 +133,72 @@ class Demo extends Component {
               ]}
           >
             <RowCol id='overview' title='overview' data={rowcol} />
-            <PipeLine  id='pipeline' title='pipeline' data={JSON.parse(pipeline)} />
+            <h3 id="pipeline">pipeline</h3>
+            <PipeLine data={JSON.parse(pipeline)} />
+            <h3 id="report">report</h3>
+            <BarChart1 data={data.plotChartData} />
+            <SliderChart
+              data={JSON.parse(data.sliderData)}
+              height={360}
+              scales={isolatedForestsScales('y', 'aaa').scales}
+              options={{
+                legendExtend: legendExtend(IsolatedForests),
+              }}
+            />
+            <Rect5 data={data.featureImportance} windowStatus={windowStatus} />
+            (
+              <Tabs defaultActiveKey='roc_curve'>
+                {modelPerformance.roc_curve
+                && Object.keys(modelPerformance.roc_curve).length > 0
+                && (
+                  <TabPane tab='ROC' key='roc_curve'>
+                    <div style={{ marginBottom: 24 }}>
+                      <Roc
+                        data={modelPerformance.roc_curve}
+                        height={400}
+                        windowStatus={windowStatus}
+                      />
+                    </div>
+                  </TabPane>
+                )
+                }
+                {modelPerformance.precision_recall_curve && (
+                  <TabPane tab='Recall' key='precision_recall_curve'>
+                    <Line xname='x' yname='y' xAlias='ceshiyi' yAlias='ceshier' data={modelPerformance.precision_recall_curve} windowStatus={windowStatus} />
+                  </TabPane>
+                )}
+                  {modelPerformance.lift_curve && (
+                  <TabPane tab='Lift' key='lift_curve'>
+                    <Line xname='Percentage of sample' yname='Lift' data={modelPerformance.lift_curve} windowStatus={windowStatus} />
+                  </TabPane>
+                )}
+                {modelPerformance.ks_curve && (
+                  <TabPane tab='K-S' key='ks_curve'>
+                    <div>{modelPerformance.ks_curve.ks}</div>
+                    <Line2 data={modelPerformance.ks_curve} windowStatus={windowStatus} />
+                  </TabPane>
+                )}
+                {modelPerformance.gain_curve && (
+                  <TabPane tab='Gain' key='gain_curve'>
+                    <Line xname='Percentage of sample' yname='Gain' data={modelPerformance.gain_curve} windowStatus={windowStatus} />
+                  </TabPane>
+                )}
+              </Tabs>
+            )
+            }
+            {modelPerformance.confusion_matrix && (
+                <Matrix matrixdata={modelPerformance.confusion_matrix} />
+            )}
+            <h3 id="compare">compare</h3>
+            <CompareCharts
+              windowStatus={windowStatus}
+              compareCharts={JSON.parse(data.compareCharts)}
+              compareChartsType={JSON.parse(data.compareChartsType)}
+              compareChartsModels={JSON.parse(data.compareChartsModels)}
+              compareChartsModels1={JSON.parse(data.compareChartsModels1)}
+              currentJob={data.currentJob}
+            />
+            <CompareTable dataCompare={JSON.parse(data.dataCompare)} currentJob={data.currentJob} />
             <h3>pipeline</h3>
             <h3>pipeline</h3>
             <h3>pipeline</h3>
@@ -95,7 +214,6 @@ class Demo extends Component {
             <h3>pipeline</h3>
             <h3>pipeline</h3>
             <h3 id="report">report</h3>
-            <h3 id="compare">compare</h3>
             <h3 id="attachment" >attachment</h3>
           </ModelDetail>
         </ZetModal>
