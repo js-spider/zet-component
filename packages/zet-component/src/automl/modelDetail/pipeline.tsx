@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Popover } from 'antd';
-import ArrowPNG from '../../assets/arrow.png';
-import ArrowPNG2 from '../../assets/arrow2.png';
 import './index.less';
+import { arrow, arrow2 } from '../../utils/utils';
+
 export interface PipelineProps {
   data: any[];
 }
@@ -28,7 +28,7 @@ function PipeLineNode(props) {
 function Arrow(props) {
   return (
     <Col span={4} className={props.reverse ? 'pipelinearrows' : 'pipelinearrow'}>
-      <img src={ArrowPNG} alt="ArrowPNG" />
+      <img src={arrow()} alt="ArrowPNG" />
     </Col>
   );
 }
@@ -39,7 +39,7 @@ function BottomArrow(props) {
       <Row>
         <Col span={21} />
         <Col span={3} className={'pipelinearrowr'}>
-          <img src={ArrowPNG2} alt="ArrowPNG2" />
+          <img src={arrow2()} alt="ArrowPNG2" />
         </Col>
       </Row>
     );
@@ -47,7 +47,7 @@ function BottomArrow(props) {
   return (
     <Row>
       <Col span={3} className={'pipelinearrowr'}>
-        <img src={ArrowPNG2} alt="ArrowPNG2" />
+        <img src={arrow2()} alt="ArrowPNG2" />
       </Col>
       <Col span={21} />
     </Row>

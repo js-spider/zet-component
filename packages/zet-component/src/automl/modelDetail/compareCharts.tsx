@@ -1,11 +1,9 @@
 import React from "react";
-import { Anchor, Button, Row, Col, List, Tabs, Tooltip } from 'antd';
-import moment from "moment";
+import { Tabs } from 'antd';
 
 import Line3 from "../../components/charts/line3";
 import { LocaleReceiverHoc } from "../../utils/hoc";
 import './index.less';
-import data from "./mock";
 
 const { TabPane } = Tabs;
 

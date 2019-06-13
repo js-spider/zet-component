@@ -1,8 +1,5 @@
 import React from "react";
-import { Anchor, Tooltip } from "antd";
-import moment from "moment";
-
-import MetricsConfig from "../config/metrics";
+import { Anchor } from "antd";
 import { LocaleReceiverHoc } from "../../utils/hoc";
 import './index.less';
 

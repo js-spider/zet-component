@@ -24,6 +24,3 @@ export { default as TimeSelect } from './components/time-select';
 
 /** 输入框 */
 export { default as Input } from './components/input';
-
-export { default as RowCol } from './automl/modelDetail/row-col';
-export { default as PipeLine } from './automl/modelDetail/pipeline';

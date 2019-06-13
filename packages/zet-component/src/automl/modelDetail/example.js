@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { Components } from '../../index';
 import ZetModal from '../../components/ZetModal';
-import BarChart1 from '../../components/charts/BarChart1';
-import SliderChart from '../../components/charts/SliderChart';
-import Rect5 from '../../components/charts/rect5';
-import Line from '../../components/charts/line';
-import Line2 from '../../components/charts/line2';
-// import Line3 from '../../components/charts/line3';
 import Roc from './roc';
 import Matrix from './matrix';
 import { Button, Icon, Tooltip, Tabs } from 'antd';
@@ -16,9 +10,8 @@ import PipeLine from "./pipeline";
 import data from "./mock";
 import CompareCharts from "./compareCharts";
 import CompareTable from "./compareTable";
-// import Chart from "../../../dist/components/charts";
-// const { Chart } = Components;
-// const { BarChart1 } = Chart;
+const { Chart } = Components;
+const { BarChart1, SliderChart, Rect5, Line, Line2  } = Chart;
 const { TabPane } = Tabs;
 
 class Demo extends Component {

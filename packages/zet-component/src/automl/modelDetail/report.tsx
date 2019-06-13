@@ -1,8 +1,5 @@
 import React from "react";
 import {Tabs } from "antd";
-import moment from "moment";
-
-import MetricsConfig from "../config/metrics";
 import { LocaleReceiverHoc } from "../../utils/hoc";
 import { Components } from "../../index";
 import Roc from "./roc";
