@@ -1,11 +1,12 @@
 import React from "react";
 import { Row, Col } from "antd";
-import { getResourceTypes, defaultResourceType } from "../../utils/utils";
+// import { getResourceTypes, defaultResourceType } from "../../utils/utils";
+import { autoMLUtils } from 'zet-utils';
 import Resource from "../../components/resource";
 import { FormResourcesHoc } from "../../utils/hoc";
 
 const { ResourceGroup } = Resource;
-
+const {getResourceTypes, defaultResourceType} = autoMLUtils;
 interface Props {
   groupConfig: any;
   authRead: any;

@@ -1,6 +1,6 @@
 
-import * as autoML from './automl';
+import * as autoMLUtils from './automl';
 
-export const Utils = {
-  autoMLUtils:autoML
-}
+export {
+  autoMLUtils
+};
