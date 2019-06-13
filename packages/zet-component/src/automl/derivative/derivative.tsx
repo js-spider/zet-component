@@ -27,8 +27,10 @@ interface DerivativeProps {
   value?: ValueItemSchema[];
   /** 当前内容是否禁用 */
   disabled: boolean;
+  derivationPreviewData?: any[];
   /** 数据内容发生变化回调 */
   onChange?: (value: ValueItemSchema[]) => void;
+  preview?: (contentValue: any) => void;
 }
 interface DerivativeState {
   currentId: string;
@@ -84,8 +86,12 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     });
     this.props.onChange(newValue);
   }
+  preview = () => {
+    const { value } = this.props;
+    this.props.preview(value);
+  }
   render() {
-    const {data, collapseData, disabled = false, value = []} = this.props;
+    const {data, collapseData, disabled = false, value = [], derivationPreviewData} = this.props;
     const { currentId } = this.state;
     const contentData = data.find((item) => (item.id === currentId)) || {params: []};
     const contentValue = value.find((item) => (item.id === currentId)) || {id: '', params: []};
@@ -116,7 +122,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
           </Content>
         </Layout>
         <Footer className={'derivative-footer'}>
-          <Collapse data={collapseData}/>
+          <Collapse data={collapseData} preview={this.preview} derivationPreviewData={derivationPreviewData}/>
         </Footer>
       </Layout>
     );
