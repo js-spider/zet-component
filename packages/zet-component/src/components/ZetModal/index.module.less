@@ -1,0 +1,70 @@
+.fullScreen{
+  top:0!important;
+  padding-bottom: 0!important;
+  width: 100%!important;
+  height: 100%!important;
+  :global{
+
+    .ant-modal-body{
+      height: 93.8vh !important;
+      max-height: none!important;
+    }
+
+  }
+}
+.modalTitle{
+  .modalMinSize,.modalMaxSize{
+    position: absolute;
+    color:#ccc;
+    top: 0;
+    right: 46px;
+    height: 40px;
+    width: 30px;
+    line-height: 40px;
+    cursor: pointer;
+    z-index: 1;
+  }
+  .modalMinSize:hover,.modalMaxSize:hover{
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .modalMinSize:focus,.modalMaxSize:focus{
+    outline: none;
+  }
+}
+.zetmodel{
+  z-index: 1001;
+  top: 50px;
+  :global{
+    .ant-modal-close-x{
+      text-align: left!important;
+      width:36px!important;
+    }
+    .ant-modal-body{
+      height: 75vh;
+    }
+  }
+}
+.zetModal{
+  :global{
+    .ant-modal-footer button + button{
+      margin-left: 15px;
+    }
+    .ant-modal-header {
+      padding: 8px 24px;
+    }
+    .ant-modal-close-x{
+      line-height: 40px;
+      height: 40px;
+      width: 40px;
+    }
+
+    .ant-upload.ant-upload-drag p.ant-upload-hint{
+      font-size: 12px;
+    }
+    .ant-upload.ant-upload-drag p.ant-upload-text{
+      font-size: 14px;
+      margin: 0 0 8px;
+    }
+
+  }
+}
