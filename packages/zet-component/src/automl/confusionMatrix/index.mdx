@@ -1,0 +1,43 @@
+---
+name: MatrixDetail (混淆矩阵)
+menu: AutoML
+---
+
+import { Playground, PropsTable } from 'docz';
+import { State, Toggle } from 'react-powerplug';
+import { AutoML } from '../../index.tsx';
+import { LocaleProviderHoc } from '../../utils/hoc.js';
+import data from './_mock/data.js'
+
+# Derivative
+
+## 使用
+Derivative
+
+
+## 参数模板
+
+### 组件输出接口数据
+```
+```
+
+## 案例介绍
+<Playground>
+  <State>
+    {({ state, setState }) => {
+      const { MatrixDetail } = AutoML
+      return (
+        LocaleProviderHoc(
+          <MatrixDetail initialValue={0.35} data={data}></MatrixDetail>
+        )
+      )
+    }}
+  </State>
+</Playground>
+
+
+
+
+## API
+
+<PropsTable of={AutoML.Derivative} />

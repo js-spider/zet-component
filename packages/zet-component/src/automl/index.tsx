@@ -9,6 +9,7 @@ import ModelList from './modelList/modelList';
 import MetricsSelect from './metricsSelect';
 import Derivative from './derivative';
 import Resources from './resource';
+import MatrixDetail from './confusionMatrix';
 
 const AutoML = {
   Design,
@@ -21,6 +22,7 @@ const AutoML = {
   MetricsSelect,
   Derivative,
   Resources,
+  MatrixDetail
 };
 
 export default AutoML;

@@ -10,7 +10,7 @@ import { Components } from '../../index.tsx';
 import data from './_mock/sliderChartData.js';
 import data2 from './_mock/sliderChartData2.js';
 import data3 from './_mock/sliderChartData3.js';
-
+import HhiData from './_mock/HhiChartData.js';
 
 
 # Components.Chart (建模设计)
@@ -67,3 +67,15 @@ import { Components } from 'zet-component';
 </Playground>
 
 
+####横向柱状图
+
+<Playground style={{height:400}}>
+  <State initial={{ show:'chart' }}>
+    {({ state, setState }) => {
+      const {Chart:{Hhistogram}} = Components;
+      return (
+        <Hhistogram data={HhiData} rename={{xx:'x'}}></Hhistogram>
+      )
+    }}
+  </State>
+</Playground>
