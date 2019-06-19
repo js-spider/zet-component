@@ -30,7 +30,7 @@ export default class Hhistogram extends React.Component<Props,any> {
     }
     return (
       <div>
-        <Chart height={300} data={dv} forceFit padding={[20,60,20,80]} >
+        <Chart height={300} data={dv} scale={{x:{min:0,max:1}}} forceFit padding={[20,60,20,80]} >
           <Coord transpose />
           <Axis
             name="y"

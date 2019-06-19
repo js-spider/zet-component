@@ -5,6 +5,48 @@ import { ColumnProps } from "antd/lib/table";
 
 
 const { Chart:{Hhistogram}} = Components;
+const defaultCut = [
+  0.0,
+  0.025,
+  0.05,
+  0.07500000000000001,
+  0.1,
+  0.125,
+  0.15000000000000002,
+  0.17500000000000002,
+  0.2,
+  0.225,
+  0.25,
+  0.275,
+  0.30000000000000004,
+  0.325,
+  0.35000000000000003,
+  0.375,
+  0.4,
+  0.42500000000000004,
+  0.45,
+  0.47500000000000003,
+  0.5,
+  0.525,
+  0.55,
+  0.5750000000000001,
+  0.6000000000000001,
+  0.625,
+  0.65,
+  0.675,
+  0.7000000000000001,
+  0.7250000000000001,
+  0.75,
+  0.775,
+  0.8,
+  0.8250000000000001,
+  0.8500000000000001,
+  0.875,
+  0.9,
+  0.925,
+  0.9500000000000001,
+  0.9750000000000001
+]
 
 interface MatrixData{
   cut:number[];
@@ -28,6 +70,12 @@ interface MatrixTable{
 }
 
 class MatrixDetail extends React.Component<Props,any>{
+  static defaultProps = {
+    initialValue:0.5,
+    data:{
+      cut:defaultCut
+    }
+  }
   constructor(props){
     super(props);
     this.state={
@@ -41,6 +89,7 @@ class MatrixDetail extends React.Component<Props,any>{
   }
   getMatrixDataItem = (value)=>{
     const {data} = this.props;
+    data.cut = data.cut || defaultCut;
     let index = -1;
     for(let item of data.cut){
       if(item - value > 0.01){
@@ -153,16 +202,15 @@ class MatrixDetail extends React.Component<Props,any>{
     const chartData = this.formatChartData(matrixData);
     return (
       <React.Fragment>
-        <Row>混淆矩阵</Row>
         <Row gutter={20}>
-          <Col span={4}>
+          <Col span={6}>
             <span>Threshold(cut-off)</span>
           </Col>
           <Col span={8}>
             <Slider marks={{0:0,1:1}} min={0} max={1} step={0.025} onChange={this.onSliderChange} value={sliderValue}></Slider>
           </Col>
-          <Col span={12}>
-            <Input style={{width:50}} disabled={true} value={sliderValue}></Input>
+          <Col span={10}>
+            <Input style={{width:65}} disabled={true} value={sliderValue}></Input>
             <Button style={{width:150,marginLeft:20}} disabled={initialValue===sliderValue} onClick={this.backToOptimal} >BACK TO OPTIMAL*</Button>
           </Col>
         </Row>
