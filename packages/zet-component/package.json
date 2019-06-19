@@ -45,7 +45,7 @@
     "classnames": "^2.2.6",
     "docz-theme-default": "^0.13.7",
     "moment": "^2.24.0",
-    "zet-utils": "^0.0.3"
+    "zet-utils": "^1.0.3"
   },
   "gitHead": "930b80939af50246307f29ccb1b4b7a0c44348e1"
 }
