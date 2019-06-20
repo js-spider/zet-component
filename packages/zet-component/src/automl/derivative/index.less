@@ -1,4 +1,9 @@
-
+.derivative-wraper{
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 .sider-title{
   font-size: 14px;
   color: rgba(0, 0, 0, 0.45);
@@ -9,13 +14,14 @@
 }
 
 .derivative{
-  height:300px;
+  flex:1;
   overflow: auto;
   .alg-list{
     height: calc(~'100%' - 46px) !important;
   } 
 }
 .derivative-footer{
+  height:230px;
   padding:0px;
   background-color: white;
 }
@@ -23,15 +29,15 @@
   border-top:1px solid rgba(16, 38, 58, 0.15);
   border-bottom:1px solid rgba(16, 38, 58, 0.15);
   color: rgba(0, 0, 0, 0.45);
-  padding: 15px 20px;
+  padding: 8px 20px;
   font-size: 14px;
   overflow: hidden;
 }
 .mess{
   border-radius: 2px;
   background-color: #fafafa;
-  padding:20px;
-  margin:20px 0px;
+  padding:8px 20px;
+  margin-bottom:15px;
   color: rgba(16, 38, 58, 0.85);
 }
 .ant-table-thead tr{
@@ -50,6 +56,8 @@
 .derivative-content{
   display: flex;
   flex-direction: column;
+  height:100%;
+  overflow: hidden;
 }
 .derivative-content-table{
   flex:1;

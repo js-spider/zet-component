@@ -95,6 +95,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     const { currentId } = this.state;
     const contentData = data.find((item) => (item.id === currentId)) || {params: []};
     const contentValue = value.find((item) => (item.id === currentId)) || {id: '', params: []};
+    const collapseDisable = value.find(item=>(item.params.length>0 && item.checked))
     return (
       <Layout className={'derivative-wraper'}>
         <Layout className={"alg-layout derivative"}>
@@ -113,7 +114,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
           <Content className={"alg-content"}>
             <div className={'derivative-content'}>
               <Item
-                mess={"使用数值类的原始特征生成新的特征."}
+                mess={contentData.desc}
                 data={contentData.params}
                 value={contentValue}
                 onChange={this.onSelectedChange}
@@ -122,7 +123,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
           </Content>
         </Layout>
         <Footer className={'derivative-footer'}>
-          <Collapse data={collapseData} preview={this.preview} derivationPreviewData={derivationPreviewData}/>
+          <Collapse disabled={!collapseDisable} data={collapseData} preview={this.preview} derivationPreviewData={derivationPreviewData}/>
         </Footer>
       </Layout>
     );

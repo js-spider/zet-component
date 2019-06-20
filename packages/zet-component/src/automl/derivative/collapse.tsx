@@ -4,6 +4,7 @@ import { ColumnProps } from "antd/lib/table";
 interface CollapseFooterProps {
   data: any;
   derivationPreviewData: any[];
+  disabled?:boolean;
   preview: () => void;
 }
 interface CollapseFooterState {}
@@ -39,7 +40,7 @@ class CollapseFooter extends React.Component<
   CollapseFooterState
 > {
   render() {
-    const { derivationPreviewData } = this.props;
+    const { derivationPreviewData, disabled } = this.props;
     const columns: Array<ColumnProps<PreviewTable>> = [
       {
         title: "序号",
@@ -86,14 +87,15 @@ class CollapseFooter extends React.Component<
     return (
       <React.Fragment>
         <div className={"footer-tile"}>
+          <span style={{lineHeight:'32px'}}>{`特征衍生(${derivationPreviewData ? derivationPreviewData.length: 0})`}</span>
           <Button
+            disabled={disabled}
+            type='primary'
+            onClick={this.props.preview}
             style={{
               float: "right",
-              width: 80,
-              backgroundColor: "#1890ff",
-              color: "white",
+              width: 80
             }}
-            onClick={this.props.preview}
           >
             运行
           </Button>
@@ -101,9 +103,9 @@ class CollapseFooter extends React.Component<
         <div>
           <Table
             columns={columns}
-            dataSource={derivationPreviewData}
+            dataSource={disabled ? [] : derivationPreviewData}
             pagination={false}
-            scroll={{y: 150}}
+            scroll={{y: 130}}
           />
         </div>
 

@@ -1,13 +1,13 @@
-import React from 'react';
-import { Table } from 'antd';
-import './index.less';
+import React from "react";
+import { Table } from "antd";
+import "./index.less";
 
 interface ValueItemSchema {
   /** 算法Id */
   id: string;
   /** 算法名称 */
   name?: string;
-  checked ?: boolean;
+  checked?: boolean;
   /** 参数选项 */
   params: any[];
 }
@@ -20,53 +20,57 @@ interface ItemProps {
   onChange?: (value: any, selectedKeys: any) => void;
 }
 
-class Item extends React.Component<ItemProps> {
-
-  onSelectChange = (selectedRowKeys) => {
-    const {value} = this.props;
-    this.props.onChange({...value, params: selectedRowKeys}, selectedRowKeys);
-  }
+class Item extends React.Component<ItemProps, any> {
+  onSelectChange = selectedRowKeys => {
+    const { value } = this.props;
+    this.props.onChange({ ...value, params: selectedRowKeys }, selectedRowKeys);
+  };
 
   render() {
-    const { mess, data, value, intl= {} } = this.props;
+    const { mess, data, value, intl = {} } = this.props;
     const columns = [
       {
-        title: '名称',
-        dataIndex: 'name',
+        title: "名称",
+        dataIndex: "name"
       },
       {
-        title: '含义',
-        dataIndex: 'meaning',
-      },
+        title: "含义",
+        dataIndex: "meaning"
+      }
     ];
     const rowSelection = {
       selectedRowKeys: value.params || [],
       onChange: this.onSelectChange,
-      getCheckboxProps: record => ({disabled: !value.checked}),
+      getCheckboxProps: record => ({ disabled: !value.checked })
     };
     const dataSource = getDataSource(data);
-    return(
+    return (
       <React.Fragment>
-        <div className={'mess'}>
-            <p>{mess}</p>
+        <div className={"mess"}>
+          <span>{mess}</span>
         </div>
-        <Table className='derivative-content-table' rowSelection={rowSelection}
-        columns={columns} dataSource={dataSource} pagination={false} bordered={false}/>
+        <Table
+          className="derivative-content-table"
+          rowSelection={rowSelection}
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+          bordered={false}
+          scroll={{y:'max-content'}}
+        />
       </React.Fragment>
     );
   }
 }
 
-const getDataSource = (data= []) => {
-  return Array.isArray(data) ? (
-    data.map((item) => (
-      {
+const getDataSource = (data = []) => {
+  return Array.isArray(data)
+    ? data.map(item => ({
         key: item.key,
         name: item.name,
-        meaning: item.meaning,
-      }
-    ))
-  ) : [];
+        meaning: item.meaning
+      }))
+    : [];
 };
 
 export default Item;
