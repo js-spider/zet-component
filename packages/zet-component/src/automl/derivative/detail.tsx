@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Table } from "antd";
+import { ColumnProps } from "antd/lib/table";
 
 interface Props {
   visible: boolean;
@@ -8,35 +9,15 @@ interface Props {
 }
 interface State {}
 
-const getColumns = () => {
-  return [
-    {
-      title: "序号",
-      dataIndex: "index",
-      key: "index",
-      // align: "center",
-    },
-    {
-      title: "字段名",
-      dataIndex: "field",
-      key: "field",
-      // align: "center",
-    },
-    {
-      title: "类型",
-      dataIndex: "type",
-      key: "type",
-      // align: "center",
-    },
-  ];
-};
+interface PreviewTable {}
+
 const getDataSource = data => {
   if (Array.isArray(data)) {
     return data.map((item, index) => {
       return {
         index,
         field: item.name,
-        type: item.age,
+        type: item.type,
       };
     });
   }
@@ -47,7 +28,26 @@ class DerivativeDetail extends React.Component<Props, State> {
   hideModal = () => {};
   render() {
     const { visible, handleCancel, data, ...otherProps } = this.props;
-    const columns = getColumns();
+    const columns: Array<ColumnProps<PreviewTable>> = [
+      {
+        title: "序号",
+        dataIndex: "index",
+        width:200,
+        align: 'center',
+      },
+      {
+        title: "字段名",
+        dataIndex: "field",
+        width:400,
+        align: 'center',
+      },
+      {
+        title: "类型",
+        dataIndex: "type",
+        width:400,
+        align: 'center',
+      },
+    ];
     const dataSource = getDataSource(data);
     return (
       <Modal
@@ -58,8 +58,8 @@ class DerivativeDetail extends React.Component<Props, State> {
       >
         <Table
           className={"detail-table"}
-          dataSource={dataSource}
           columns={columns}
+          dataSource={dataSource}
           scroll={{ y: 400 }}
           pagination={false}
         />
