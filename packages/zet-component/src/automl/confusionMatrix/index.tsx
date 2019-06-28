@@ -113,7 +113,7 @@ class MatrixDetail extends React.Component<Props,any>{
   getPredictTitle = (type)=>{
     return (
       <div style={{textAlign:'center'}}>
-        <span style={{margin:'10px 0px',display:'block'}} >Predicted</span>
+        {/* <span style={{margin:'10px 0px',display:'block'}} >Predicted</span> */}
         <Button  disabled={true} size={'small'}>{type === 'yes'? 'YES':'NO'}</Button>
       </div>
     )
@@ -121,8 +121,9 @@ class MatrixDetail extends React.Component<Props,any>{
   getActually = (type)=>{
     return(
       <span>
-        Actually
-        <Button disabled={true} style={{marginLeft:15}} size={'small'}>{type==='yes' ? 'YES':'NO'}</Button>
+        {/* Actually
+        <Button disabled={true} style={{marginLeft:15}} size={'small'}>{type==='yes' ? 'YES':'NO'}</Button> */}
+        <Button disabled={true}  size={'small'}>{type==='yes' ? 'YES':'NO'}</Button>
       </span>
     )
   }
@@ -135,25 +136,37 @@ class MatrixDetail extends React.Component<Props,any>{
   getTableColumn = () => {
     const columns: ColumnProps<MatrixTable>[] = [
       {
-        title: "",
-        dataIndex: "index",
-        align:'center'
+        title: '',
+        children: [
+          {
+            title: '实际',
+            dataIndex: 'actual',
+            key: 'actual',
+            align:'center'
+          },
+        ],
       },
       {
-        title: this.getPredictTitle('yes'),
-        dataIndex: "predicted_yes",
-        align:'center'
+        title: '预测',
+        children: [
+          {
+            title: this.getPredictTitle('yes'),
+            dataIndex: "predicted_yes",
+            align:'center'
+          },
+          {
+            title: this.getPredictTitle('no'),
+            dataIndex: "predicted_no",
+            align:'center'
+          },
+          {
+            title: "Total",
+            dataIndex: "total",
+            align:'center'
+          }
+        ],
       },
-      {
-        title: this.getPredictTitle('no'),
-        dataIndex: "predicted_no",
-        align:'center'
-      },
-      {
-        title: "Total",
-        dataIndex: "total",
-        align:'center'
-      }
+      
     ]
     return columns
   }
@@ -161,21 +174,21 @@ class MatrixDetail extends React.Component<Props,any>{
     const dataSource : any[] =  [
       {
         id:'index',
-        index:this.getActually('yes'),
+        actual:this.getActually('yes'),
         predicted_yes:this.getStyleValue('success',matrixData.tp),
         predicted_no: this.getStyleValue('failed',matrixData.fn),
         total: matrixData.tp + matrixData.fn
       },
       {
         id:'index1',
-        index:this.getActually('no'),
+        actual:this.getActually('no'),
         predicted_yes:this.getStyleValue('failed',matrixData.fp),
         predicted_no: this.getStyleValue('success',matrixData.tn),
         total: matrixData.fp + matrixData.tn
       },
       {
         id:'index2',
-        index:'Total',
+        actual:'Total',
         predicted_yes:matrixData.tp+matrixData.fp,
         predicted_no: matrixData.fn + matrixData.tn,
         total:matrixData.tp + matrixData.fn + matrixData.fp + matrixData.tn
