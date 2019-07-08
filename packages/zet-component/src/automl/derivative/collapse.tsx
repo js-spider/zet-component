@@ -97,7 +97,7 @@ class CollapseFooter extends React.Component<
               width: 80
             }}
           >
-            运行
+            生成
           </Button>
         </div>
         <div>

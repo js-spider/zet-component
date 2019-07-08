@@ -38,13 +38,19 @@ class DerivativeDetail extends React.Component<Props, State> {
       {
         title: "字段名",
         dataIndex: "field",
-        width:400,
+        width:300,
+        align: 'center',
+      },
+      {
+        title: "特征重要性",
+        dataIndex: "feature_important",
+        width:300,
         align: 'center',
       },
       {
         title: "类型",
         dataIndex: "type",
-        width:400,
+        width:300,
         align: 'center',
       },
     ];

@@ -105,3 +105,94 @@ export const FormResourcesHoc = WrappedComponent => {
     }
   })(HocComponent)
 };
+
+/**
+ * tensile hoc
+ */
+class Tensile extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      clientY:{
+        start:0,
+        end:0,
+      },
+      clientX:{
+        start:0,
+        end:0,
+      },
+      mouseStatus:null,
+      canTensile:false,
+    };
+    this.timer = null;
+  }
+  setClient = (mouseType,e)=>{
+    let defaultClient = {...this.state};
+    defaultClient.mouseStatus = mouseType;
+    switch(mouseType){
+      case 'down':
+        defaultClient.clientX.start = e.clientX;
+        defaultClient.clientY.start = e.clientY;
+        defaultClient.clientX.end = e.clientX;
+        defaultClient.clientY.end = e.clientY;
+        defaultClient.canTensile = true;
+        break;
+      case 'move':
+        console.log('client.clientY >>. ',e.clientY)
+        defaultClient.clientX.end = e.clientX;
+        defaultClient.clientY.end = e.clientY;
+        break;
+      case 'up':
+        defaultClient.clientX.start = 0;
+        defaultClient.clientY.start = 0;
+        defaultClient.clientX.end = 0;
+        defaultClient.clientY.end = 0;
+        defaultClient.canTensile = false;
+        break;
+      default: null
+    }
+    this.setState({
+      ...defaultClient
+    })
+  }
+  mouseDownHandle=(e)=>{
+    this.setClient('down',e)
+  }
+  mouseMoveHandle=(e)=>{
+    const {canTensile} = this.state;
+    const client = {clientY:e.clientY,clientX:e.clientX};
+    if(e && canTensile){
+      this.timer = this.timer || setTimeout(()=>{
+        this.setClient('move',client);
+        this.timer = null;
+      },50)
+    }
+  }
+  mouseUpHandle=(e)=>{
+    this.setClient('up',e);
+    this.timer = null;
+  }
+  render(){
+    const {clientX,clientY} = this.state;
+    console.log('clientXX >> ',clientX,clientY)
+    const {style={},className,height,component,targetId,otherProps} = this.props;
+    let hocStyle = Object.assign({},{ cursor:'move', backgroundColor:'red'},style,{height:height || 30})  
+    const WrappedComponent = component
+    const handel = {
+      onMouseDown:this.mouseDownHandle, 
+      onMouseMove:this.mouseMoveHandle,
+      onMouseUp:this.mouseUpHandle
+    }
+    const target = targetId && document.getElementById(targetId);
+    if(target){
+      target.style.height = target.clientHeight + (clientY.start - clientY.end) + 'px';
+      console.log('target.style.height >> ', target.style.height)
+    }
+    return (
+      <React.Fragment>
+       {WrappedComponent ? <WrappedComponent {...handel} props={otherProps}></WrappedComponent> : <div style={hocStyle} {...handel} props={otherProps} ></div>}
+      </React.Fragment>
+    )
+  }
+};
+export const TensileHoc = Tensile;
