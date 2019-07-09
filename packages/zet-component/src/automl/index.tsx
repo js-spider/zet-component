@@ -24,7 +24,7 @@ const AutoML = {
   MetricsSelect,
   Derivative,
   Resources,
-  MatrixDetail
+  MatrixDetail,
 };
 
 export default AutoML;
