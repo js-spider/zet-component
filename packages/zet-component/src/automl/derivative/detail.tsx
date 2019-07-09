@@ -16,8 +16,8 @@ const getDataSource = data => {
     return data.map((item, index) => {
       return {
         index,
+        ...item,
         field: item.name,
-        type: item.type,
       };
     });
   }
@@ -32,25 +32,24 @@ class DerivativeDetail extends React.Component<Props, State> {
       {
         title: "序号",
         dataIndex: "index",
-        width:200,
+        width:100,
         align: 'center',
       },
       {
         title: "字段名",
         dataIndex: "field",
-        width:300,
         align: 'center',
       },
       {
         title: "特征重要性",
         dataIndex: "feature_important",
-        width:300,
+        width:200,
         align: 'center',
       },
       {
         title: "类型",
         dataIndex: "type",
-        width:300,
+        width:150,
         align: 'center',
       },
     ];
@@ -66,7 +65,7 @@ class DerivativeDetail extends React.Component<Props, State> {
           className={"detail-table"}
           columns={columns}
           dataSource={dataSource}
-          scroll={{ y: 400 }}
+          scroll={{ y: 480 }}
           pagination={false}
         />
       </Modal>

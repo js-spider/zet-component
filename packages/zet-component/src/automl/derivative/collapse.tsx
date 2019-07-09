@@ -5,6 +5,7 @@ interface CollapseFooterProps {
   data: any;
   derivationPreviewData: any[];
   disabled?:boolean;
+  tableScrollHeight?:number | string;
   preview: () => void;
 }
 interface CollapseFooterState {}
@@ -40,7 +41,7 @@ class CollapseFooter extends React.Component<
   CollapseFooterState
 > {
   render() {
-    const { derivationPreviewData, disabled } = this.props;
+    const { derivationPreviewData, disabled,tableScrollHeight=130 } = this.props;
     const columns: Array<ColumnProps<PreviewTable>> = [
       {
         title: "序号",
@@ -100,12 +101,12 @@ class CollapseFooter extends React.Component<
             生成
           </Button>
         </div>
-        <div>
+        <div style={{height:tableScrollHeight}} className={"footer-table"}>
           <Table
             columns={columns}
             dataSource={disabled ? [] : derivationPreviewData}
             pagination={false}
-            scroll={{y: 130}}
+            // scroll={{y: tableScrollHeight}}
           />
         </div>
 

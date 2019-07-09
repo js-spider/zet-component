@@ -121,13 +121,22 @@ class Tensile extends React.Component{
         start:0,
         end:0,
       },
+      targetInitHeight:0,
       mouseStatus:null,
-      canTensile:false,
     };
     this.timer = null;
+    this.target = {};
+  }
+  componentDidMount(){
+    const {targetId} = this.props;
+    this.target = targetId ? document.getElementById(targetId): {};
+    this.target && this.setState({
+      targetInitHeight:this.target.clientHeight
+    })
   }
   setClient = (mouseType,e)=>{
     let defaultClient = {...this.state};
+    const {onChange} = this.props;
     defaultClient.mouseStatus = mouseType;
     switch(mouseType){
       case 'down':
@@ -135,58 +144,52 @@ class Tensile extends React.Component{
         defaultClient.clientY.start = e.clientY;
         defaultClient.clientX.end = e.clientX;
         defaultClient.clientY.end = e.clientY;
-        defaultClient.canTensile = true;
+        defaultClient.targetInitHeight = this.target.clientHeight
         break;
       case 'move':
-        console.log('client.clientY >>. ',e.clientY)
         defaultClient.clientX.end = e.clientX;
         defaultClient.clientY.end = e.clientY;
-        break;
-      case 'up':
-        defaultClient.clientX.start = 0;
-        defaultClient.clientY.start = 0;
-        defaultClient.clientX.end = 0;
-        defaultClient.clientY.end = 0;
-        defaultClient.canTensile = false;
         break;
       default: null
     }
     this.setState({
       ...defaultClient
     })
+    onChange && onChange(defaultClient)
   }
   mouseDownHandle=(e)=>{
     this.setClient('down',e)
+    document.addEventListener('mousemove',this.mouseMoveHandle);
+    document.addEventListener('mouseup',this.mouseUpHandle)
   }
   mouseMoveHandle=(e)=>{
-    const {canTensile} = this.state;
     const client = {clientY:e.clientY,clientX:e.clientX};
-    if(e && canTensile){
-      this.timer = this.timer || setTimeout(()=>{
-        this.setClient('move',client);
-        this.timer = null;
-      },50)
-    }
+    this.timer = this.timer || setTimeout(()=>{
+      this.setClient('move',client);
+      this.timer = null;
+    },50)
   }
   mouseUpHandle=(e)=>{
     this.setClient('up',e);
+    this.resetMouseHandle();
+  }
+  resetMouseHandle = ()=>{
     this.timer = null;
+    document.removeEventListener('mousemove',this.mouseMoveHandle);
+    document.removeEventListener('mouseup',this.mouseUpHandle)
   }
   render(){
-    const {clientX,clientY} = this.state;
-    console.log('clientXX >> ',clientX,clientY)
-    const {style={},className,height,component,targetId,otherProps} = this.props;
-    let hocStyle = Object.assign({},{ cursor:'move', backgroundColor:'red'},style,{height:height || 30})  
+    const {clientX,clientY,targetInitHeight} = this.state;
+    const target = this.target;
+    const {style={},height,component,otherProps} = this.props;
+    let hocStyle = Object.assign({},{ cursor:'ns-resize'},style,{height:height || 3})  
     const WrappedComponent = component
     const handel = {
       onMouseDown:this.mouseDownHandle, 
-      onMouseMove:this.mouseMoveHandle,
-      onMouseUp:this.mouseUpHandle
     }
-    const target = targetId && document.getElementById(targetId);
     if(target){
-      target.style.height = target.clientHeight + (clientY.start - clientY.end) + 'px';
-      console.log('target.style.height >> ', target.style.height)
+      target.style = target.style || {};
+      target.style.height = targetInitHeight + (clientY.start - clientY.end) + 'px';
     }
     return (
       <React.Fragment>

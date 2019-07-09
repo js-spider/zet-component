@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout } from "antd";
 import List from "./list";
-import { LocaleReceiverHoc } from "../../utils/hoc";
+import { LocaleReceiverHoc, TensileHoc } from "../../utils/hoc";
 import Detail from './detail';
 import Item from "./item";
 import Collapse from "./collapse";
@@ -34,6 +34,7 @@ interface DerivativeProps {
 }
 interface DerivativeState {
   currentId: string;
+  tableScrollHeight:number | string;
 }
 
 class Derivative extends React.Component<DerivativeProps, DerivativeState> {
@@ -42,6 +43,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     super(props);
     this.state = {
       currentId: '',
+      tableScrollHeight:130,
     };
   }
   componentDidMount() {
@@ -90,9 +92,14 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     const { value } = this.props;
     this.props.preview(value);
   }
+  tableScrollHeightHandle = (value)=>{
+    value && this.setState({
+      tableScrollHeight:value.targetInitHeight + (value.clientY.start - value.clientY.end)
+    })
+  }
   render() {
     const {data, collapseData, disabled = false, value = [], derivationPreviewData} = this.props;
-    const { currentId } = this.state;
+    const { currentId, tableScrollHeight } = this.state;
     const contentData = data.find((item) => (item.id === currentId)) || {params: []};
     const contentValue = value.find((item) => (item.id === currentId)) || {id: '', params: []};
     const collapseDisable = value.find(item=>(item.params.length>0 && item.checked))
@@ -122,8 +129,13 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
             </div>
           </Content>
         </Layout>
-        <Footer className={'derivative-footer'}>
-          <Collapse disabled={!collapseDisable} data={collapseData} preview={this.preview} derivationPreviewData={derivationPreviewData}/>
+        <Footer className={'derivative-footer'} id='derivativeFooter'>
+          <TensileHoc targetId='derivativeFooter' onChange={this.tableScrollHeightHandle}></TensileHoc>
+          <Collapse disabled={!collapseDisable} 
+            data={collapseData} 
+            preview={this.preview} 
+            tableScrollHeight={tableScrollHeight}
+            derivationPreviewData={derivationPreviewData}/>
         </Footer>
       </Layout>
     );
