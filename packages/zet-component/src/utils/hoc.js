@@ -152,6 +152,7 @@ class Tensile extends React.Component{
         break;
       default: null
     }
+    defaultClient.resultHeight = this.calculateHeight(defaultClient)
     this.setState({
       ...defaultClient
     })
@@ -178,8 +179,14 @@ class Tensile extends React.Component{
     document.removeEventListener('mousemove',this.mouseMoveHandle);
     document.removeEventListener('mouseup',this.mouseUpHandle)
   }
+  calculateHeight = (value)=>{
+    const {clientY,targetInitHeight} = value;
+    const { min=0 } = this.props;
+    const result = targetInitHeight + (clientY.start - clientY.end);
+    return result>min ? result : min ;
+  }
   render(){
-    const {clientX,clientY,targetInitHeight} = this.state;
+    const {resultHeight} = this.state;
     const target = this.target;
     const {style={},height,component,otherProps} = this.props;
     let hocStyle = Object.assign({},{ cursor:'ns-resize'},style,{height:height || 3})  
@@ -189,7 +196,7 @@ class Tensile extends React.Component{
     }
     if(target){
       target.style = target.style || {};
-      target.style.height = targetInitHeight + (clientY.start - clientY.end) + 'px';
+      target.style.height = resultHeight + 'px';
     }
     return (
       <React.Fragment>

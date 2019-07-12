@@ -65,7 +65,7 @@ class DerivativeDetail extends React.Component<Props, State> {
           className={"detail-table"}
           columns={columns}
           dataSource={dataSource}
-          scroll={{ y: 480 }}
+          scroll={{ y: 460 }}
           pagination={false}
         />
       </Modal>

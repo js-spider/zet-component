@@ -43,7 +43,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     super(props);
     this.state = {
       currentId: '',
-      tableScrollHeight:130,
+      tableScrollHeight:undefined,
     };
   }
   componentDidMount() {
@@ -93,9 +93,13 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     this.props.preview(value);
   }
   tableScrollHeightHandle = (value)=>{
-    value && this.setState({
-      tableScrollHeight:value.targetInitHeight + (value.clientY.start - value.clientY.end)
-    })
+    if(value){
+      const resultHeight = value.resultHeight;
+      const tableHeight = resultHeight - 70;
+      this.setState({
+        tableScrollHeight:tableHeight
+      })
+    }
   }
   render() {
     const {data, collapseData, disabled = false, value = [], derivationPreviewData} = this.props;
@@ -130,7 +134,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
           </Content>
         </Layout>
         <Footer className={'derivative-footer'} id='derivativeFooter'>
-          <TensileHoc targetId='derivativeFooter' onChange={this.tableScrollHeightHandle}></TensileHoc>
+          <TensileHoc targetId='derivativeFooter' min={130} onChange={this.tableScrollHeightHandle}></TensileHoc>
           <Collapse disabled={!collapseDisable} 
             data={collapseData} 
             preview={this.preview} 

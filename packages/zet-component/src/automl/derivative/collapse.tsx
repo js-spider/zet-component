@@ -41,7 +41,7 @@ class CollapseFooter extends React.Component<
   CollapseFooterState
 > {
   render() {
-    const { derivationPreviewData, disabled,tableScrollHeight=130 } = this.props;
+    const { derivationPreviewData, disabled,tableScrollHeight=170} = this.props;
     const columns: Array<ColumnProps<PreviewTable>> = [
       {
         title: "序号",
@@ -101,7 +101,7 @@ class CollapseFooter extends React.Component<
             生成
           </Button>
         </div>
-        <div style={{height:tableScrollHeight}} className={"footer-table"}>
+        <div style={{height:tableScrollHeight }} className={"footer-table"}>
           <Table
             columns={columns}
             dataSource={disabled ? [] : derivationPreviewData}
