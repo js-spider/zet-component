@@ -10,6 +10,8 @@ import Demo from './example'
 import { LocaleProviderHoc } from '../../utils/hoc.js';
 import data from "./mock";
 import { AutoML, Components } from '../../index.tsx';
+const { ModelDetails } = AutoML;
+const { ModelDetail } = ModelDetails;
 
 # ModelDetail (模型详情)
 
@@ -30,39 +32,39 @@ import { AutoML } from 'zet-component';
  {({state, setState }) => {
   const { ModelDetails } = AutoML;
   const { ModelDetail } = ModelDetails;
-  return (<div style={{ height: 200 }}>
+  return (<div style={{ height: 300 }}>
    <ModelDetail
       links={[
-        {id: 'id1', title: 'id1'},
-        {id: 'id2', title: 'id2'},
-        {id: 'id3', title: 'id3'},
-        {id: 'id4', title: 'id4'},
-        {id: 'id5', title: 'id5'},
+        {id: 'id1', title: '概述', type: 'RowCol', data: data.rowCol },
+        {id: 'id2', title: 'PipeLine', type: 'PipeLine', data: JSON.parse(data.pipeline) },
+        {id: 'id3', title: '评估报告', type: 'Report',
+          data: {
+            plotChart: data.plotChartData,
+            arithmetic: data.arithmetic,
+            train: data.train,
+            thresholdChart1: { data: JSON.parse(data.sliderData), metricName: 'aaa'},
+            featureImportance: data.featureImportance,
+            modelPerformance: JSON.parse(data.modelPerformance),
+          },
+        },
+        {id: 'id4', title: '模型对比', type: 'Compare',
+          data: {
+            charts: {
+               compareCharts: JSON.parse(data.compareCharts),
+               compareChartsType: JSON.parse(data.compareChartsType),
+               compareChartsModels: JSON.parse(data.compareChartsModels),
+               compareChartsModels1: JSON.parse(data.compareChartsModels1),
+               currentJob: data.currentJob,
+            },
+            tables: {
+              dataCompare: JSON.parse(data.dataCompare),
+              currentJob: data.currentJob,
+            }
+            }
+          },
+          {id: 'id3', title: '附件', type: 'Attachments', data: data.attachments },
         ]}
-     >
-       <h3 id="id1">overview</h3>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <div>1</div>
-       <h3 id="id2">pipeline</h3>
-        <div>1</div>
-        <div>1</div>
-        <div>1</div>
-        <div>1</div>
-        <div>1</div>
-       <h3 id="id3">report</h3>
-       <h3 id="id4">compare</h3>
-       <h3 id="id5">attachment</h3>
-    </ModelDetail>
+     />
     </div>)
     }}
   </State>
@@ -254,5 +256,7 @@ import { AutoML } from 'zet-component';
 ### API
 
 ### ModelDetail
+
+<PropsTable of={ ModelDetail } />
 
 
