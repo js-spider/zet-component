@@ -26,6 +26,7 @@ class RowCol extends React.Component<RowColProps, any> {
             return (
               <Row key={1} className={'smallinfo'}>{
                 d && d.map(v => {
+                  if(!v){return}
                   return (
                     <div key={2}>
                       {v.key === '__title__' ?

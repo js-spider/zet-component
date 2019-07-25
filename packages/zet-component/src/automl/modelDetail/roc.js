@@ -52,7 +52,7 @@ class Roc extends Component {
           </span>
         </div>
 
-        {current && (
+        {current && data[current].data && (
           <CurveChart
             data={data[current].data}
             height={height}

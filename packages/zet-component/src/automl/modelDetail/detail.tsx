@@ -131,7 +131,7 @@ class Detail extends React.Component<DetailProps, any> {
                                   {
                                     v.data.modelPerformance.confusion_matrix_cut
                                     && v.data.modelPerformance.confusion_matrix_cut.y
-                                      ? <MatrixDetail data={v.data.matrixData} />
+                                      ? <MatrixDetail data={v.data.matrixData} initialValue={v.data.defaultThreshold}/>
                                       : <Matrix matrixdata={v.data.modelPerformance.confusion_matrix} />
                                   }
                                 </div>
