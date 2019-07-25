@@ -52,7 +52,7 @@ class Detail extends React.Component<DetailProps, any> {
             <Anchor getContainer={() => document.getElementById('zetRight')}>
               {
                 links.map(v => {
-                  return <Link key={v.id} href={'#' + v.id} title={v.title} />;
+                  return v && <Link key={v.id} href={'#' + v.id} title={v.title} />;
                 })
               }
             </Anchor>
@@ -60,6 +60,7 @@ class Detail extends React.Component<DetailProps, any> {
           <div className={'listDetailContentright'} id='zetRight'>
             {
               links.map(v => {
+                if(!v) return;
                 switch (v.type) {
                   case 'RowCol':
                     return (

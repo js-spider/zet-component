@@ -22,16 +22,16 @@ class RowCol extends React.Component<RowColProps, any> {
     const { data } =  this.props;
     return (
       <div>
-          {data.map(d => {
+          {data && data.map(d => {
             return (
               <Row key={1} className={'smallinfo'}>{
-                d.map(v => {
+                d && d.map(v => {
                   return (
                     <div key={2}>
                       {v.key === '__title__' ?
                         <Row className={'smalltitle'}>{v.value}</Row> :
                         <Col span={8} className={'col'}>
-                          {v.key}:
+                          {v.key.trim() ? `${v.key}:` : ''}
                           <span className={'value'}>
                             {
                               Array.isArray(v.value) ?
