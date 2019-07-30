@@ -40,6 +40,7 @@ class Roc extends Component {
   render() {
     const { selectList, current } = this.state;
     const { data, height, windowStatus } = this.props;
+    const currentData = current ? data[current].data || data[current].chartData : [];
     return (
       <div style={{ width: '100%' }}>
         <div>
@@ -52,9 +53,9 @@ class Roc extends Component {
           </span>
         </div>
 
-        {current && data[current].data && (
+        {current && currentData && (
           <CurveChart
-            data={data[current].data}
+            data={currentData}
             height={height}
             windowStatus={windowStatus}
           />

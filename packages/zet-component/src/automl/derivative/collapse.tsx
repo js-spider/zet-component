@@ -89,13 +89,13 @@ class CollapseFooter extends React.Component<
       <React.Fragment>
         <div className={"footer-tile"}>
           <span style={{lineHeight:'32px'}}>{`特征衍生(${derivationPreviewData ? derivationPreviewData.length: 0})`}</span>
-          <Button
+          <Button 
             disabled={disabled}
-            type='primary'
             onClick={this.props.preview}
             style={{
               float: "right",
-              width: 80
+              width: 80,
+              backgroundColor:'#1890ff'
             }}
           >
             生成

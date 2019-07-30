@@ -6,8 +6,7 @@ class Line extends React.Component {
 
   render() {
     const { data, xname, yname, xAlias, yAlias } = this.props;
-    console.log('propsName', xname, yname);
-    const newData = data.chartData.map(d => ({ x: d[xname], y: d[yname] }));
+    const newData = data.chartData && data.chartData.map(d => ({ x: d[xname], y: d[yname] }));
     const cols = {
       [yname]: {
         alias: yname || yAlias,

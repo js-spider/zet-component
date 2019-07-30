@@ -30,6 +30,13 @@ class Report extends React.Component<ReportProps, any> {
   constructor(props: ReportProps) {
     super(props);
   }
+  formatModelPerformanceByType = (model)=>{
+    if(model){
+      const type = Object.keys(model)[0];
+      return model[type];
+    }
+    return {};
+  }
   render() {
     const { data, windowStatus } = this.props;
     return (
@@ -51,8 +58,8 @@ class Report extends React.Component<ReportProps, any> {
           {data.precision_recall_curve && (
             <TabPane tab='Recall' key='precision_recall_curve'>
               <Line
-                xname='x' yname='y' xAlias='ceshiyi' yAlias='ceshier'
-                data={data.precision_recall_curve}
+                xname='Precision' yname='Recall'
+                data={this.formatModelPerformanceByType(data.precision_recall_curve)}
                 windowStatus={windowStatus}
               />
             </TabPane>
