@@ -96,7 +96,7 @@ class CollapseFooter extends React.Component<
               color:'#fff',
               float: "right",
               width: 80,
-              backgroundColor:'#1890ff'
+              backgroundColor:'#1976d2'
             }}
           >
             生成
