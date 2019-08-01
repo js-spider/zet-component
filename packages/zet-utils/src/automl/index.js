@@ -39,7 +39,6 @@ export const convertMem = (size) => {
 /**
  * 获取 resource min max step值
  */
-
 export const getResourceTypes = (resource = {}) => {
   const { cpus, mem, gpus } = resource;
   const resourceFormat = (resourceType = {}, extendFn) => {
