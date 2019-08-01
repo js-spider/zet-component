@@ -26,6 +26,7 @@ class Resources extends React.Component<Props, any> {
     const { groupConfig, authRead, standalone, userResource } = this.props;
 
     const types = getResourceTypes(userResource);
+    console.log('types >>> ',types)
     return (
       <div style={{ padding: 40 }}>
         {groupConfig.map(conf => {
