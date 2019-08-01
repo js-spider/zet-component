@@ -55,7 +55,7 @@ export const getResourceTypes = (resource = {}) => {
   return {
     cpu: { title: 'CPU(Cores)', ...resourceFormat(cpus) },
     mem: { title: 'MEM(GB)', ...resourceFormat(mem, convertMem) },
-    gpu: { title: 'CPU(Cores)', ...resourceFormat(gpus) },
+    gpu: { title: 'GPU(Cores)', ...resourceFormat(gpus) },
   };
 };
 
