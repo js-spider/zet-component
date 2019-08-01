@@ -93,6 +93,7 @@ class CollapseFooter extends React.Component<
             disabled={disabled}
             onClick={this.props.preview}
             style={{
+              color:'#fff',
               float: "right",
               width: 80,
               backgroundColor:'#1890ff'
