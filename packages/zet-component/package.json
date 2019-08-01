@@ -1,6 +1,6 @@
 {
   "name": "zet-component",
-  "version": "0.1.38",
+  "version": "0.1.39",
   "description": "zet-ui",
   "main": "dist/zet-ui.js",
   "module": "dist/index.esm.js",
@@ -45,7 +45,7 @@
     "classnames": "^2.2.6",
     "docz-theme-default": "^0.13.7",
     "moment": "^2.24.0",
-    "zet-utils": "^1.0.8"
+    "zet-utils": "^1.0.9"
   },
   "gitHead": "d315ba17f1a858fd79c8c2dfa42963c83e3b4418"
 }
