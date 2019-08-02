@@ -49,7 +49,7 @@ export default class Hhistogram extends React.Component<Props,any> {
           />
           <Axis name="x" label={{
             formatter:(text)=>{
-              return `${Number(text)*100}%` 
+              return `${(Number(text)*100).toFixed(0)}%` 
             }
           }}/>
           <Tooltip/>

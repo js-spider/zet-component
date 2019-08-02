@@ -24,11 +24,13 @@ class Resources extends React.Component<Props, any> {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { groupConfig, authRead, standalone, userResource } = this.props;
-
+    if(userResource.mem && Number(userResource.mem.step) < 100){
+      userResource.mem.step = Number(userResource.mem.step)*1024 
+    }
     const types = getResourceTypes(userResource);
     return (
       <div style={{ padding: 40 }}>
-        {groupConfig.map(conf => {
+        {standalone && groupConfig.map(conf => {
           const item = conf.key;
           const itemContent = conf.itemContent || defaultResourceType;
           return (
