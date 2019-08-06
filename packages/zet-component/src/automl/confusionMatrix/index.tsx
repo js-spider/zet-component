@@ -114,7 +114,6 @@ class MatrixDetail extends React.Component<Props, any> {
     const { data: { label= {} }} = this.props;
     return (
       <div style={{textAlign: 'center'}}>
-        {/* <span style={{margin:'10px 0px',display:'block'}} >Predicted</span> */}
         <span  >{type === 'yes' ? label.true : label.false}</span>
       </div>
     );
@@ -122,11 +121,7 @@ class MatrixDetail extends React.Component<Props, any> {
   getActually = (type) => {
     const { data: { label= {} }} = this.props;
     return(
-      <span>
-        {/* Actually
-        <Button disabled={true} style={{marginLeft:15}} size={'small'}>{type==='yes' ? 'YES':'NO'}</Button> */}
-        <span>{type === 'yes' ? label.true : label.false}</span>
-      </span>
+      <span>{type === 'yes' ? label.true : label.false}</span>
     );
   }
   getStyleValue = (type, value) => {
