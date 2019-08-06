@@ -1,10 +1,9 @@
 import React from 'react';
-import { Row,Col,Slider,Input, Table,Button } from 'antd';
+import { Row, Col, Slider, Input, Table, Button } from 'antd';
 import { Components } from '../../index';
-import { ColumnProps } from "antd/lib/table";
+import { ColumnProps } from 'antd/lib/table/interface';
 
-
-const { Chart:{Hhistogram}} = Components;
+const { Chart: {Hhistogram}} = Components;
 const defaultCut = [
   0.0,
   0.025,
@@ -45,96 +44,99 @@ const defaultCut = [
   0.9,
   0.925,
   0.9500000000000001,
-  0.9750000000000001
-]
+  0.9750000000000001,
+];
 
-interface MatrixData{
-  cut:number[];
-  tp:number[];
-  fn:number[];
-  fp:number[];
-  tn:number[];
-  precision:number[];
-  recall:number[];
-  f1:number[];
-  accuracy:number[];
+interface MatrixData {
+  cut: number[];
+  tp: number[];
+  fn: number[];
+  fp: number[];
+  tn: number[];
+  precision: number[];
+  recall: number[];
+  f1: number[];
+  accuracy: number[];
+  label: any;
 }
-interface Props{
-  form?:any;
-  initialValue?:number;
-  data:MatrixData;
+interface Props {
+  form?: any;
+  initialValue?: number;
+  data: MatrixData;
 }
-interface MatrixTable{
+interface MatrixTable {
   title: string;
   render: () => React.ReactNode;
 }
 
-class MatrixDetail extends React.Component<Props,any>{
+class MatrixDetail extends React.Component<Props, any> {
   static defaultProps = {
-    initialValue:0.5,
-    data:{
-      cut:defaultCut
-    }
-  }
-  constructor(props){
+    initialValue: 0.5,
+    data: {
+      cut: defaultCut,
+    },
+  };
+  constructor(props) {
     super(props);
-    this.state={
-      sliderValue:0,
-      matrixData:{}
-    }
+    this.state = {
+      sliderValue: 0,
+      matrixData: {},
+    };
   }
-  componentDidMount(){
+  componentDidMount() {
     const {initialValue} = this.props;
-    this.onSliderChange(initialValue)
+    this.onSliderChange(initialValue);
   }
-  getMatrixDataItem = (value)=>{
+  getMatrixDataItem = (value) => {
     const {data} = this.props;
     data.cut = data.cut || defaultCut;
     let index = -1;
-    for(let item of data.cut){
-      if(item - value > 0.01){
+    for (const item of data.cut) {
+      if (item - value > 0.01) {
         break;
       }
       index ++;
     }
     const matrixData = {};
-    Object.keys(data).forEach(key=>{
+    Object.keys(data).forEach(key => {
       matrixData[key] = data[key][index];
-    })
-    return matrixData
+    });
+    return matrixData;
   }
-  onSliderChange = (value)=>{
+  onSliderChange = (value) => {
     const item = this.getMatrixDataItem(value);
     this.setState({
-      sliderValue:value,
-      matrixData:item
-    })
+      sliderValue: value,
+      matrixData: item,
+    });
   }
-  getPredictTitle = (type)=>{
+  getPredictTitle = (type) => {
+    const { data: { label= {} }} = this.props;
     return (
-      <div style={{textAlign:'center'}}>
+      <div style={{textAlign: 'center'}}>
         {/* <span style={{margin:'10px 0px',display:'block'}} >Predicted</span> */}
-        <Button  disabled={true} size={'small'}>{type === 'yes'? 'YES':'NO'}</Button>
+        <span  >{type === 'yes' ? label.true : label.false}</span>
       </div>
-    )
+    );
   }
-  getActually = (type)=>{
+  getActually = (type) => {
+    const { data: { label= {} }} = this.props;
     return(
       <span>
         {/* Actually
         <Button disabled={true} style={{marginLeft:15}} size={'small'}>{type==='yes' ? 'YES':'NO'}</Button> */}
-        <Button disabled={true}  size={'small'}>{type==='yes' ? 'YES':'NO'}</Button>
+        <span>{type === 'yes' ? label.true : label.false}</span>
       </span>
-    )
+    );
   }
-  getStyleValue = (type,value)=>{
-    return type==='success' ?
-     <span style={{color:'#13c2c2'}}>{value}</span>
+  getStyleValue = (type, value) => {
+    return type === 'success' ?
+     <span style={{color: '#13c2c2'}}>{value}</span>
      :
-     <span style={{color:'#f5222d'}}>{value}</span>
+     <span style={{color: '#f5222d'}}>{value}</span>;
   }
   getTableColumn = () => {
-    const columns: ColumnProps<MatrixTable>[] = [
+    const columns: Array<ColumnProps<MatrixTable>> = [
       {
         title: '',
         children: [
@@ -142,7 +144,7 @@ class MatrixDetail extends React.Component<Props,any>{
             title: '实际',
             dataIndex: 'actual',
             key: 'actual',
-            align:'center'
+            align: 'center',
           },
         ],
       },
@@ -152,66 +154,66 @@ class MatrixDetail extends React.Component<Props,any>{
           {
             title: this.getPredictTitle('yes'),
             dataIndex: "predicted_yes",
-            align:'center'
+            align: 'center',
           },
           {
             title: this.getPredictTitle('no'),
             dataIndex: "predicted_no",
-            align:'center'
+            align: 'center',
           },
           {
             title: "Total",
             dataIndex: "total",
-            align:'center'
-          }
+            align: 'center',
+          },
         ],
       },
-      
-    ]
-    return columns
+
+    ];
+    return columns;
   }
-  getDataSource = (matrixData) =>{
-    const dataSource : any[] =  [
+  getDataSource = (matrixData) => {
+    const dataSource: any[] =  [
       {
-        id:'index',
-        actual:this.getActually('yes'),
-        predicted_yes:this.getStyleValue('success',matrixData.tp),
-        predicted_no: this.getStyleValue('failed',matrixData.fn),
-        total: matrixData.tp + matrixData.fn
+        id: 'index',
+        actual: this.getActually('yes'),
+        predicted_yes: this.getStyleValue('success', matrixData.tp),
+        predicted_no: this.getStyleValue('failed', matrixData.fn),
+        total: matrixData.tp + matrixData.fn,
       },
       {
-        id:'index1',
-        actual:this.getActually('no'),
-        predicted_yes:this.getStyleValue('failed',matrixData.fp),
-        predicted_no: this.getStyleValue('success',matrixData.tn),
-        total: matrixData.fp + matrixData.tn
+        id: 'index1',
+        actual: this.getActually('no'),
+        predicted_yes: this.getStyleValue('failed', matrixData.fp),
+        predicted_no: this.getStyleValue('success', matrixData.tn),
+        total: matrixData.fp + matrixData.tn,
       },
       {
-        id:'index2',
-        actual:'Total',
-        predicted_yes:matrixData.tp+matrixData.fp,
+        id: 'index2',
+        actual: 'Total',
+        predicted_yes: matrixData.tp + matrixData.fp,
         predicted_no: matrixData.fn + matrixData.tn,
-        total:matrixData.tp + matrixData.fn + matrixData.fp + matrixData.tn
+        total: matrixData.tp + matrixData.fn + matrixData.fp + matrixData.tn,
       },
-    ]
+    ];
     return dataSource;
   }
-  backToOptimal = ()=>{
+  backToOptimal = () => {
     const { initialValue } = this.props;
-    (initialValue || initialValue===0) && this.onSliderChange(initialValue)
+    (initialValue || initialValue === 0) && this.onSliderChange(initialValue);
   }
-  
+
   formatChartData = (matrixData) => {
-    return ['accuracy','f1','recall','precision'].map((item,index)=>({
-       y:item,
-       x:matrixData[item]
-    }))
+    return ['accuracy', 'f1', 'recall', 'precision'].map((item, index) => ({
+       y: item,
+       x: matrixData[item],
+    }));
   }
-  render(){
+  render() {
     const { sliderValue, matrixData } = this.state;
     const { initialValue } = this.props;
     const columns = this.getTableColumn();
-    const dataSource = this.getDataSource(matrixData)
+    const dataSource = this.getDataSource(matrixData);
     const chartData = this.formatChartData(matrixData);
     return (
       <React.Fragment>
@@ -220,14 +222,16 @@ class MatrixDetail extends React.Component<Props,any>{
             <span>Threshold(cut-off)</span>
           </Col>
           <Col span={8}>
-            <Slider marks={{0:0,1:1}} min={0} max={1} step={0.025} onChange={this.onSliderChange} value={sliderValue}></Slider>
+            <Slider marks={{0: 0, 1: 1}} min={0} max={1} step={0.025}
+                    onChange={this.onSliderChange} value={sliderValue}></Slider>
           </Col>
           <Col span={10}>
-            <Input style={{width:65}} disabled={true} value={sliderValue}></Input>
-            <Button style={{width:150,marginLeft:20}} disabled={initialValue===sliderValue} onClick={this.backToOptimal} >BACK TO OPTIMAL*</Button>
+            <Input style={{width: 65}} disabled={true} value={sliderValue}></Input>
+            <Button style={{width: 150, marginLeft: 20}} disabled={initialValue === sliderValue}
+                    onClick={this.backToOptimal} >BACK TO OPTIMAL*</Button>
           </Col>
         </Row>
-        <Row style={{marginTop:30}}>
+        <Row style={{marginTop: 30}}>
           <Table
             columns={columns}
             dataSource={dataSource}
@@ -240,8 +244,8 @@ class MatrixDetail extends React.Component<Props,any>{
           <Hhistogram data={chartData}></Hhistogram>
         </Row>
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default MatrixDetail
+export default MatrixDetail;

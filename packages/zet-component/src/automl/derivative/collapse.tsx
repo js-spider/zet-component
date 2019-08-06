@@ -41,7 +41,7 @@ class CollapseFooter extends React.Component<
   CollapseFooterState
 > {
   render() {
-    const { derivationPreviewData, disabled,tableScrollHeight=170} = this.props;
+    const { derivationPreviewData, disabled, tableScrollHeight= 170} = this.props;
     const columns: Array<ColumnProps<PreviewTable>> = [
       {
         title: "序号",
@@ -88,21 +88,23 @@ class CollapseFooter extends React.Component<
     return (
       <React.Fragment>
         <div className={"footer-tile"}>
-          <span style={{lineHeight:'32px'}}>{`特征衍生(${derivationPreviewData ? derivationPreviewData.length: 0})`}</span>
-          <Button 
+          <span style={{lineHeight: '32px'}}>
+            {`衍生特征 (${derivationPreviewData ? derivationPreviewData.length : 0})`}
+          </span>
+          <Button
             disabled={disabled}
             onClick={this.props.preview}
             style={{
-              color:'#fff',
+              color: '#fff',
               float: "right",
               width: 80,
-              backgroundColor:'#1976d2'
+              backgroundColor: '#1976d2',
             }}
           >
             生成
           </Button>
         </div>
-        <div style={{height:tableScrollHeight }} className={"footer-table"}>
+        <div style={{height: tableScrollHeight }} className={"footer-table"}>
           <Table
             columns={columns}
             dataSource={disabled ? [] : derivationPreviewData}

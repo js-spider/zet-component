@@ -22,6 +22,11 @@
   "husky": {
     "hooks": {}
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
     "husky": "^1.3.1",
     "lerna": "^3.9.0",

@@ -19,7 +19,8 @@
     "no-empty-interface": false,
     "jsx-alignment": false,
     "no-implicit-dependencies": false,
-    "arrow-parens" : false
+    "arrow-parens" : false,
+    "no-submodule-imports": false
   },
   "rulesDirectory": []
 }
