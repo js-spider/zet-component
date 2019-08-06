@@ -9,6 +9,14 @@
 		"email": "qiaojienet@163.com"
 	},
 	"repository": "https://github.com/9-web/zet-component",
+  "scripts": {
+    "dev": "umi-lib doc dev",
+    "build:doc": "umi-lib doc build",
+    "deploy:doc": "npm run build:doc && umi-lib doc deploy",
+    "build": "umi-lib build",
+    "build:watch": "umi-lib build --watch",
+    "tslint": "./node_modules/.bin/tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+  },
 	"devDependencies": {
 		"@types/classnames": "^2.2.7",
 		"antd": "^3.13.0",
