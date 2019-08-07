@@ -116,7 +116,7 @@ class CollapseFooter extends React.Component<CollapseFooterProps,CollapseFooterS
               float: "right",
               backgroundColor: '#1976d2',
             }}
-            loading={loading}
+            loading={ loading }
           >
             生成
           </Button>
