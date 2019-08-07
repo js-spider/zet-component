@@ -30,7 +30,7 @@ interface DerivativeProps {
   derivationPreviewData?: any[];
   /** 数据内容发生变化回调 */
   onChange?: (value: ValueItemSchema[]) => void;
-  preview?: (contentValue: any) => void;
+  preview?: (contentValue: any,cbk:any) => void;
 }
 interface DerivativeState {
   currentId: string;
@@ -88,10 +88,12 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
     });
     this.props.onChange(newValue);
   }
-  preview = () => {
+
+  preview = (cbk) => {
     const { value } = this.props;
-    this.props.preview(value);
+    this.props.preview(value,cbk);
   }
+
   tableScrollHeightHandle = (value)=>{
     if(value){
       const resultHeight = value.resultHeight;
@@ -101,6 +103,7 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
       })
     }
   }
+
   render() {
     const {data, collapseData, disabled = false, value = [], derivationPreviewData} = this.props;
     const { currentId, tableScrollHeight } = this.state;
@@ -135,9 +138,9 @@ class Derivative extends React.Component<DerivativeProps, DerivativeState> {
         </Layout>
         <Footer className={'derivative-footer'} id='derivativeFooter'>
           <TensileHoc targetId='derivativeFooter' min={130} onChange={this.tableScrollHeightHandle}></TensileHoc>
-          <Collapse disabled={!collapseDisable} 
-            data={collapseData} 
-            preview={this.preview} 
+          <Collapse disabled={!collapseDisable}
+            data={collapseData}
+            preview={this.preview}
             tableScrollHeight={tableScrollHeight}
             derivationPreviewData={derivationPreviewData}/>
         </Footer>

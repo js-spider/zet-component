@@ -6,9 +6,11 @@ interface CollapseFooterProps {
   derivationPreviewData: any[];
   disabled?:boolean;
   tableScrollHeight?:number | string;
-  preview: () => void;
+  preview: (cbk:any) => void;
 }
-interface CollapseFooterState {}
+interface CollapseFooterState {
+  loading:any,
+}
 
 interface PreviewTable {
   title: string;
@@ -36,11 +38,26 @@ const getAmount = (data = {}) => {
   return total;
 };
 
-class CollapseFooter extends React.Component<
-  CollapseFooterProps,
-  CollapseFooterState
-> {
+class CollapseFooter extends React.Component<CollapseFooterProps,CollapseFooterState> {
+  constructor(props){
+    super(props);
+    this.state = {
+      loading:false
+    }
+  }
+
+  preview = () => {
+    this.setState({
+      loading:true
+    })
+    this.props.preview(() => {
+      this.setState({
+        loading:false
+      })
+    })
+  }
   render() {
+    const { loading } = this.state;
     const { derivationPreviewData, disabled, tableScrollHeight= 170} = this.props;
     const columns: Array<ColumnProps<PreviewTable>> = [
       {
@@ -93,13 +110,13 @@ class CollapseFooter extends React.Component<
           </span>
           <Button
             disabled={disabled}
-            onClick={this.props.preview}
+            onClick={this.preview}
             style={{
               color: '#fff',
               float: "right",
-              width: 80,
               backgroundColor: '#1976d2',
             }}
+            loading={loading}
           >
             生成
           </Button>
