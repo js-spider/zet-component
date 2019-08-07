@@ -89,7 +89,7 @@ class CollapseFooter extends React.Component<CollapseFooterProps,CollapseFooterS
         align: 'center',
         width: 200,
         dataIndex: "variableType",
-        render: (text, record, index) => {
+        render: (text) => {
           switch (text) {
             case 'numeric':
               return '数值型';
@@ -97,6 +97,8 @@ class CollapseFooter extends React.Component<CollapseFooterProps,CollapseFooterS
               return '时间型';
             case 'text':
               return '文本型';
+            case 'categorical':
+              return '类别型';
             default: '';
           }
         },
