@@ -109,7 +109,7 @@ class CollapseFooter extends React.Component<CollapseFooterProps,CollapseFooterS
             {`衍生特征 (${derivationPreviewData ? derivationPreviewData.length : 0})`}
           </span>
           <Button
-            disabled={disabled}
+            disabled={loading || disabled}
             onClick={this.preview}
             style={{
               color: '#fff',
