@@ -6,7 +6,7 @@ export default {
   cjs: 'rollup',
   // cssModules: false,
   doc: {
-    base: '/zet-component',
+    base: './',
     title: 'Zet Component',
     description: 'Zet Component UI library for React',
     wrapper: 'src/wrapper.js',
